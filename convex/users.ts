@@ -9,7 +9,7 @@ export const login = mutation({
     },
     handler: async (ctx, args) => {
         const user = await ctx.db.query("users")
-            .filter((q) => q.eq(q.field("username"), args.username))
+            .filter((q) => q.eq(q.field("fullName"), args.username))
             .unique();
 
         if (!user) {
@@ -32,6 +32,7 @@ export const login = mutation({
 export const register = mutation({
     args: {
         username: v.string(),
+        fullName: v.string(),
         password: v.string()
     },
     handler: async (ctx, args) => {
@@ -47,6 +48,7 @@ export const register = mutation({
 
         const userId = ctx.db.insert("users", {
             username: args.username,
+            fullName: args.fullName,
             password: hashedPassword
         });
 
