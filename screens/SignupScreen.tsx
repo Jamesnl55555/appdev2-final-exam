@@ -5,12 +5,41 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    Touchable
+    Alert
 } from "react-native";
+import { useState } from "react";
+import { api } from "../convex/_generated/api";
+
+import { useMutation } from "convex/react";
 
 import Ionicons from "@react-native-vector-icons/ionicons"
 
 export default function SignupScreen() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [fullName, setFullName] = useState('')
+
+    const register = useMutation(api.users.register)
+
+    const submit = async () => {
+        if (!email || !password || !fullName) {
+            Alert.alert("Error", "Please fill in all fields!")
+            return
+        }
+        try {
+            const result = await register({
+                username: email,
+                password,
+                fullName
+            })
+        }
+        catch (error) {
+            Alert.alert("Error", "Unexpected error happen. Please try again!")
+            console.log(error)
+        }
+    }
+
+        
     return (
         <View style={styles.container}>
             {/** 1. Header Section */}
@@ -21,13 +50,13 @@ export default function SignupScreen() {
             {/** 2. Form Section */}
             <View style={styles.formContainer}>
                 <Text style={styles.label}>Full Name</Text>
-                <TextInput style={styles.input} placeholder="John Doe" />
+                <TextInput style={styles.input} placeholder="John Doe" onChangeText={setFullName} />
 
                 <Text style={styles.label}>Email Address</Text>
-                <TextInput style={styles.input} placeholder="john@gmail.com" />
+                <TextInput style={styles.input} placeholder="john@gmail.com" onChangeText={setEmail}/>
 
                 <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.input} secureTextEntry={true} placeholder="********" />
+                <TextInput style={styles.input} secureTextEntry={true} placeholder="********" onChangeText={setPassword} />
                 <TouchableOpacity style={styles.loginButton}>
                     <Text style={styles.loginButtonText}>Sign Up</Text>
                 </TouchableOpacity>
@@ -47,7 +76,7 @@ export default function SignupScreen() {
                 </View>
                 <View style={styles.footer}>
                     <Text>Already have an account? </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={submit}>
                         <Text style={styles.linkText}>Log In</Text>
                     </TouchableOpacity>
                 </View>

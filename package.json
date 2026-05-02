@@ -1,5 +1,5 @@
 {
-  "name": "rn-todo-convex",
+  "name": "appdev2-final-exam",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-native-vector-icons/ionicons": "^13.1.1",
+    "@react-navigation/native": "^7.2.2",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^3.0.3",
     "convex": "^1.37.0",
