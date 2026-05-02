@@ -1,8 +1,11 @@
 import { mutation } from "./_generated/server";
+import { v } from "convex/values";
+import { Id } from "./_generated/dataModel";
 
 export const seed = mutation({
-  args: {},
-  handler: async (ctx) => {
+  args: {userId: v.id("users")},
+
+  handler: async (ctx, args: { userId: Id<"users"> }) => {
     const initialTasks = [
       "Buy groceries",
       "Finish React Native tutorial",
@@ -18,9 +21,11 @@ export const seed = mutation({
 
     for (const taskText of initialTasks) {
       await ctx.db.insert("todos", {
-        text: taskText,
-        isCompleted: Math.random() > 0.7, // Randomly mark some as completed
-      });
+            text: taskText,
+            userId: args.userId,
+            isCompleted: Math.random() > 0.7, // Randomly mark some as completed
+        },
+      );
     }
     
     return "Successfully seeded 10 tasks!";
