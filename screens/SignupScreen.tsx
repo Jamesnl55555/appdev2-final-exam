@@ -55,7 +55,7 @@ export default function SignupScreen() {
         </View>
     );
 }
-
+//copied the signup screen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
