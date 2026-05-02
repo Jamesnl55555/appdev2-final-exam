@@ -9,6 +9,7 @@ export default defineSchema({
   }),
   users: defineTable({
     username: v.string(),
+    fullName: v.string(),
     password: v.string(),
   })
 });
